@@ -1,0 +1,64 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "type": "probe-rs-debug",
+            "request": "launch",
+            "name": "probe-rs Debug",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "cargo build --example",
+            "connectUnderReset": false,
+            "chip": "nRF52840_xxAA",
+            "flashingConfig": {
+                "flashingEnabled": true,
+                "resetAfterFlashing": true,
+                "haltAfterReset": true
+            },
+            "coreConfigs": [
+                {
+                    "coreIndex": 0,
+                    "programBinary": "./target/thumbv7em-none-eabi/debug/examples/${fileBasenameNoExtension}",
+
+                    "rttEnabled": true,
+                    "rttChannelFormats": [
+                        {
+                            "channelNumber": 0,
+                            "dataFormat": "String", // Format RTT data as String data
+                            "showTimestamps": false // Include host-side timestamps for every line of data transferred from the target RTT output
+                        },
+                        {
+                            "channelNumber": 1,
+                            // "dataFormat": "BinaryLE" // Treat data as raw binary data, and do not format in any way
+                            "dataFormat": "String", // Format RTT data as String data
+                            "showTimestamps": false // Include host-side timestamps for every line of data transferred from the target RTT output
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "probe-rs-debug",
+            "request": "launch",
+            "name": "probe-rs Release",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "cargo build --example --release",
+            "connectUnderReset": true,
+            "chip": "nRF52840_xxAA",
+            "flashingConfig": {
+                "flashingEnabled": true,
+                "resetAfterFlashing": true,
+                "haltAfterReset": true
+            },
+            "coreConfigs": [
+                {
+                    "coreIndex": 0,
+                    "programBinary": "./target/thumbv7em-none-eabi/release/examples/${fileBasenameNoExtension}"
+                }
+            ]
+        }
+    ]
+}
